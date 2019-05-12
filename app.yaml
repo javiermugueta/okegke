@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: okegke
+  labels:
+    app: okegke
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: okegke
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: okegke
+    spec:
+      containers:
+      - image: javiermugueta/okegke
+        env:
+          - name: FROMWHERE
+            value: "Oracle Kubernetes Engine (OKE)"
+            #value: "Google Kubernetes Engine (GKE)"
+        name: okegke
+        ports:
+        - containerPort: 8080
+          name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: okegke
+spec:
+ type: LoadBalancer
+ selector:
+   app: okegke
+ ports:
+ - name: http
+   protocol: TCP
+   port: 80
