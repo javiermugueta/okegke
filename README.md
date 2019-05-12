@@ -16,7 +16,7 @@ kubectl get svc
 ```
 Test in a browser:
 
-http://<serviceip>/greet
+http://[serviceip]/greet
 
 
 
